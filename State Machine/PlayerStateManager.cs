@@ -25,6 +25,7 @@ public class PlayerStateManager : MonoBehaviour
     // PLAYER STATS
     public float playerRunSpeed = 7f;
     public float playerJumpForce = 13f;
+    public bool isAttacking;
 
     public static PlayerStateManager instance { get; private set; }
 
@@ -87,8 +88,8 @@ public class PlayerStateManager : MonoBehaviour
     private void DisableAttackBox() {
         playerAttackBox.enabled = false;
     } 
-    private void ResetAttack() { // used for special attack as well
-        idleState.isAttacking = false;
+    public void ResetAttack() { // used for grounded attacks
+        isAttacking = false;
         playerAnimator.Play("Hero_Idle");
     }
 
@@ -119,7 +120,6 @@ public class PlayerStateManager : MonoBehaviour
         playerAirAttackBox.enabled = false;
     }
     private void ResetAirAttack() {
-        jumpState.isAttacking = false;
-        fallState.isAttacking = false;
+        isAttacking = false;
     }
 }

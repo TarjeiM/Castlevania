@@ -3,10 +3,11 @@ using UnityEngine;
 public class PlayerFallState : PlayerBaseState
 {
     private float dirX = 0f; // store horizontal input
-    public bool isAttacking = false;
     public override void EnterState(PlayerStateManager player) {
         Debug.Log("Hello from fall state");
-        player.playerAnimator.Play("Hero_Jump");
+        if (player.isAttacking == false) {
+            player.playerAnimator.Play("Hero_Jump"); 
+        }
     }
     public override void UpdateState(PlayerStateManager player) {
         // get current horizontal input
@@ -45,6 +46,6 @@ public class PlayerFallState : PlayerBaseState
     private void Attack(PlayerStateManager player) 
     {
         player.playerAnimator.Play("Hero_Air_Attack", -1, 0f);
-        isAttacking = true;
+        player.isAttacking = true;
     }
 }

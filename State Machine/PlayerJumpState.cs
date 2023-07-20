@@ -3,7 +3,6 @@ using UnityEngine;
 public class PlayerJumpState : PlayerBaseState
 {
     private float dirX = 0f; // store horizontal input
-    public bool isAttacking = false;
     public override void EnterState(PlayerStateManager player) {
         Debug.Log("Hello from jump state");
         Vector2 jumpPw = new Vector2(0, player.playerJumpForce);
@@ -42,6 +41,6 @@ public class PlayerJumpState : PlayerBaseState
     private void Attack(PlayerStateManager player) 
     {
         player.playerAnimator.Play("Hero_Air_Attack", -1, 0f);
-        isAttacking = true;
+        player.isAttacking = true;
     }
 }

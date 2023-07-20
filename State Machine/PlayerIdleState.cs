@@ -4,10 +4,10 @@ public class PlayerIdleState : PlayerBaseState
 {
     private float dirX = 0f; // store horizontal input
     private float dirY = 0f; // store vertical input
-    public bool isAttacking = false;
     public override void EnterState(PlayerStateManager player) {
         // starting conditions, like animation.Play()
         Debug.Log("Hello from idle state");
+        player.ResetAttack();
         player.playerAnimator.Play("Hero_Idle");
         player.playerRigidbody.velocity = Vector2.zero;
     }
@@ -16,7 +16,7 @@ public class PlayerIdleState : PlayerBaseState
         dirY = Input.GetAxisRaw("Vertical");
         dirX = Input.GetAxisRaw("Horizontal");
 
-        if (isAttacking == false) {
+        if (player.isAttacking == false) {
             // space button triggers switch to jump state
             if (Input.GetButtonDown("Jump")) {
                 player.SwitchState(player.jumpState);
@@ -47,11 +47,11 @@ public class PlayerIdleState : PlayerBaseState
     private void Attack(PlayerStateManager player)
     {
         player.playerAnimator.Play("Hero_Attack", -1, 0f);
-        isAttacking = true;
+        player.isAttacking = true;
     }
     private void SpecialAttack(PlayerStateManager player)
     {
         player.playerAnimator.Play("Hero_Special", -1, 0f);
-        isAttacking = true; 
+        player.isAttacking = true; 
     }
 }

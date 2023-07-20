@@ -5,6 +5,7 @@ public class PlayerRunState : PlayerBaseState
     private float dirX = 0f; // store horizontal input
     public override void EnterState(PlayerStateManager player) {
         Debug.Log("Hello from run state");
+        player.ResetAttack();
         player.playerAnimator.Play("Hero_Run");
     }
     public override void UpdateState(PlayerStateManager player) {
