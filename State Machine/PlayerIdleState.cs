@@ -39,7 +39,7 @@ public class PlayerIdleState : PlayerBaseState
     }
     public override void FixedUpdateState(PlayerStateManager player)
     {
-        player.playerRigidbody.velocity = new Vector2(0f, 0f);
+        
     }
     public override void OnCollisionEnter2D(PlayerStateManager player, Collision2D collision) {
 
