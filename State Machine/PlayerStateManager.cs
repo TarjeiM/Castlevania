@@ -17,6 +17,7 @@ public class PlayerStateManager : MonoBehaviour
     public PolygonCollider2D playerAttackBox;
     public PolygonCollider2D playerCrouchAttackBox;
     public CircleCollider2D playerSpecialAttackBox;
+    public CircleCollider2D playerAirAttackBox;
     public Animator playerAnimator;
 
     [SerializeField] private LayerMask groundMask;
@@ -45,6 +46,7 @@ public class PlayerStateManager : MonoBehaviour
         playerAttackBox.enabled = false;
         playerCrouchAttackBox.enabled = false;
         playerSpecialAttackBox.enabled = false;
+        playerAirAttackBox.enabled = false;
 
         currentState = idleState;
         currentState.EnterState(this); 
@@ -107,5 +109,17 @@ public class PlayerStateManager : MonoBehaviour
     }
     private void DisableSpecialAttackBox() {
         playerSpecialAttackBox.enabled = false;
+    }
+
+    // AIR ATTACK - methods called in animation events
+    private void EnableAirAttackBox() {
+        playerAirAttackBox.enabled = true;
+    }
+    private void DisableAirAttackBox() {
+        playerAirAttackBox.enabled = false;
+    }
+    private void ResetAirAttack() {
+        jumpState.isAttacking = false;
+        fallState.isAttacking = false;
     }
 }
