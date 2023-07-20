@@ -42,7 +42,6 @@ public class PlayerFallState : PlayerBaseState
     public override void OnCollisionEnter2D(PlayerStateManager player, Collision2D collision) {
 
     }
-
     private void Attack(PlayerStateManager player) 
     {
         player.playerAnimator.Play("Hero_Air_Attack", -1, 0f);
