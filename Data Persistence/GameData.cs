@@ -1,5 +1,5 @@
 [System.Serializable]
-public class GameData
+public class GameData 
 {
     // variable types we want to store in JSON
     public int EXP, GOLD;
@@ -14,3 +14,4 @@ public class GameData
         this.itemsCollected = new SerializableDictionary<string, int>();
     }
 }
+
