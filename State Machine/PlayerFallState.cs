@@ -12,7 +12,7 @@ public class PlayerFallState : PlayerBaseState
         dirX = Input.GetAxisRaw("Horizontal");
         // checking for ground and no vertical velocity to switch to idle or running
         if (player.IsGrounded()) {
-            if (dirX == 0f) {
+            if (dirX == 0f && player.playerRigidbody.velocity.x == 0f) {
                 player.SwitchState(player.idleState);
             }
             else {
