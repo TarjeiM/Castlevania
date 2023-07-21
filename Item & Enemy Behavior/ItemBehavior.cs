@@ -4,24 +4,23 @@ public class ItemBehavior : MonoBehaviour, ICollectible
 {
     [SerializeField] private string id = "healthup1"; // unique to this item
     private PlayerStats playerStats;
-    void Start()
-    {
-        GameObject player = GameObject.FindWithTag("Player");
-        if (player != null) {
-            playerStats = player.GetComponent<PlayerStats>();
-        }
-    }
 
+    void Awake()
+    {
+        playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
+    }
+    
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag == "Player")
         {
-            playerStats.itemsCollected.Add(id); 
+            playerStats.itemsCollected.Add(id);
+            playerStats.ScaleStatsToLevel(); 
             Destroy(this.gameObject);
         }
     }
 
-    public void CheckCollectStatus(PlayerStats playerStats) // called by data persistence manager on scene load
+    public void CheckCollectStatus() // called by data persistence manager on scene load
     {
         if (playerStats.itemsCollected.Contains(id))
         {
@@ -29,4 +28,5 @@ public class ItemBehavior : MonoBehaviour, ICollectible
         }
 
     }
+    
 }

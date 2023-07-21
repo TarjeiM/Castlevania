@@ -3,6 +3,20 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour, IDataPersistence
 {
+    public static PlayerStats instance { get; private set; }
+
+    private void Awake()
+    {
+        if (instance != null)
+        { 
+            Debug.Log("Deleted excess player stats from scene.");
+            Destroy(this.gameObject);
+            return;
+        }
+        instance = this;
+        DontDestroyOnLoad(this.gameObject);
+    }
+
     [Header("Player Stats")]
     public int maxHP = 100;
     public int currentHP = 100;
@@ -15,19 +29,6 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
     public List<string> itemsCollected;
     //
     [SerializeField] private GameObject levelUpText;
-
-    public static PlayerStats instance { get; private set; }
-    private void Awake()
-    {
-        if (instance != null)
-        { 
-            Debug.Log("Deleted excess playerstats from scene.");
-            Destroy(this.gameObject);
-            return;
-        }
-        instance = this;
-        DontDestroyOnLoad(this.gameObject);
-    }
     //
     public int[] levelReq = new int[] 
     { 0, 100, 250, 450, 700, 1000, 1350, 1750, 2200, 2700, // 1-10
@@ -59,13 +60,11 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
     }
     public void LoadData(GameData data) // called on new game and load game
     {
-        // retrieve saved data
         this.EXP = data.EXP;
-        this.GOLD = data.GOLD;
-        ScaleStatsToLevel();
-        
+        this.GOLD = data.GOLD;      
         this.abilitesUnlocked = data.abilitesUnlocked;
         this.itemsCollected = data.itemsCollected;
+        ScaleStatsToLevel();
     }
     public void SaveData(ref GameData data) 
     { 
@@ -73,10 +72,7 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
         data.GOLD = this.GOLD;
         data.abilitesUnlocked = this.abilitesUnlocked;
         data.itemsCollected = this.itemsCollected;
-    }
-    public void CheckCollectStatus(PlayerStats playerStats)
-    {
-        // interface method, not used in this script
+        Debug.Log("Save Step 2");
     }
     private void LevelUp() 
     {
@@ -90,12 +86,12 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
         // check for level up?
         ScaleStatsToLevel();
     }
-    private void ScaleStatsToLevel()
+    public void ScaleStatsToLevel()
     {
         int level = GetCurrentLevel(EXP, levelReq);
         // set stats according to level scaling
-        maxHP = (90 + (level * 10));
-        maxMP = (90 + (level * 10));
+        maxHP = (90 + (level * 10) + (GetCollectedHealthUp() * 10));
+        maxMP = (90 + (level * 10) + (GetCollectedManaUp() * 10));
         currentHP = maxHP; // current HP/MP was restored on save
         currentMP = maxMP;
         STR = (8 + (level * 2));
@@ -108,7 +104,39 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
         if (Input.GetKeyDown(KeyCode.Tab)) { // decreasing current HP for testing purposes
             currentHP -= 10;
         }
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            Debug.Log(GetCollectedHealthUp());
+        }
+    }
+    private int GetCollectedHealthUp()
+    {   
+        int result = 0;
+        if (itemsCollected.Count > 0)
+        {
+            foreach (string item in itemsCollected)
+            {
+                if (!string.IsNullOrEmpty(item) && item.Substring(0, 1) == "h")
+                {
+                    result++;
+                }
+            }
+        }   
+        return result;
+    }
+    private int GetCollectedManaUp()
+    {   
+        int result = 0;
+        if (itemsCollected.Count > 0)
+        {
+            foreach (string item in itemsCollected)
+            {
+                if (!string.IsNullOrEmpty(item) && item.Substring(0, 1) == "m")
+                {
+                    result++;
+                }
+            }
+        }   
+        return result;
     }
 }
-
-// test

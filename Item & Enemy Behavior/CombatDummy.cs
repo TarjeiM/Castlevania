@@ -7,11 +7,8 @@ public class CombatDummy : MonoBehaviour
     private PlayerStats playerStats;
     void Start()
     {
-        GameObject player = GameObject.FindWithTag("Player");
-        if (player != null) {
-            playerStats = player.GetComponent<PlayerStats>();
-        }
         GetComponent<Animator>().Play("Flying");
+        playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -39,7 +36,7 @@ public class CombatDummy : MonoBehaviour
     }
     
     private void Die()
-    {
+    {   
         Debug.Log("Dummy was slain");
         playerStats.GainExperience(lootExp);
         Destroy(this.gameObject);

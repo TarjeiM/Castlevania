@@ -10,6 +10,7 @@ public class DataPersistenceManager : MonoBehaviour
     private GameData gameData;
     private List<IDataPersistence> dataPersistenceObjects;
     private List<ICollectible> collectibleObjects;
+    private PlayerStats playerStats;
     public static DataPersistenceManager instance { get; private set; }
 
     private void Awake()
@@ -37,16 +38,14 @@ public class DataPersistenceManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
         // find references on scene load
-        this.dataPersistenceObjects = FindAllDataPersistenceObjects();
-        this.collectibleObjects = FindAllCollectibleObjects();
+        // this.dataPersistenceObjects = FindAllDataPersistenceObjects();
+        playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
+        collectibleObjects = FindAllCollectibleObjects();
         // find player stats and check collect status on collected items
-        GameObject player = GameObject.FindWithTag("Player");
-        if (player != null) {
-            PlayerStats playerStats = player.GetComponent<PlayerStats>();
-            foreach (ICollectible collectibleObj in collectibleObjects) {
-                collectibleObj.CheckCollectStatus(playerStats);
-            }
+        foreach (ICollectible collectibleObj in collectibleObjects) {
+            collectibleObj.CheckCollectStatus();
         }
+        
     }
 
     private void OnSceneUnloaded(Scene scene) {
@@ -81,11 +80,13 @@ public class DataPersistenceManager : MonoBehaviour
     }
 
     public void NewGame() {
-        this.gameData = new GameData(); // create new instance of GameData
-        dataHandler.Save(gameData); // write data from the new instance to file
+        this.gameData = new GameData(); 
+        dataHandler.Save(gameData); 
+        playerStats.LoadData(gameData);
+        /*
         foreach (IDataPersistence dataPersistenceObj in dataPersistenceObjects) {
             dataPersistenceObj.LoadData(gameData); // load the new data
-        }
+        }*/
         Debug.Log("New Game");
     }
 
@@ -105,15 +106,12 @@ public class DataPersistenceManager : MonoBehaviour
     }
 
     public void SaveGame() {
-        // pass the data to other scripts so they can update it
-        foreach (IDataPersistence dataPersistanceObj in dataPersistenceObjects) {
-            dataPersistanceObj.SaveData(ref gameData);
-        }
+        playerStats.SaveData(ref gameData);
         // save that data to a file using the data handler
         dataHandler.Save(gameData);
         Debug.Log("Saved Game");
     }
-
+    
     private List<IDataPersistence> FindAllDataPersistenceObjects() {
         IEnumerable<IDataPersistence> dataPersistenceObjects = 
         FindObjectsOfType<MonoBehaviour>().OfType<IDataPersistence>();
@@ -125,4 +123,5 @@ public class DataPersistenceManager : MonoBehaviour
         FindObjectsOfType<MonoBehaviour>().OfType<ICollectible>();
         return new List<ICollectible>(collectibleObjects);
     }
+    
 }
