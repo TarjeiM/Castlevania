@@ -9,7 +9,9 @@ public class DataPersistenceManager : MonoBehaviour
     private FileDataHandler dataHandler;
     private GameData gameData;
     private List<IDataPersistence> dataPersistenceObjects;
+    private List<GameObject> collectibleItems;
     public static DataPersistenceManager instance { get; private set; }
+    private PlayerStats playerStats;
 
     private void Awake()
     {
@@ -22,6 +24,11 @@ public class DataPersistenceManager : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(this.gameObject);
         this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
+
+        GameObject player = GameObject.FindWithTag("Player");
+        if (player != null) {
+            playerStats = player.GetComponent<PlayerStats>();
+        }
     }
 
     private void OnEnable() {
@@ -37,6 +44,10 @@ public class DataPersistenceManager : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
         // find all data persistence objects on scene load
         this.dataPersistenceObjects = FindAllDataPersistenceObjects();
+        // check collected status (method destroys collected items)
+        foreach (IDataPersistence dataPersistenceObj in dataPersistenceObjects) {
+            dataPersistenceObj.CheckCollectStatus(playerStats);
+        }
     }
 
     private void OnSceneUnloaded(Scene scene) {

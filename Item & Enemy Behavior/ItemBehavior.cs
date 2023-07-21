@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class ItemBehavior : MonoBehaviour
+public class ItemBehavior : MonoBehaviour, IDataPersistence
 {
-    private string id = "healthup1"; // unique to this item
+    [SerializeField] private string id = "healthup1"; // unique to this item
     private PlayerStats playerStats;
     void Start()
     {
@@ -16,8 +16,27 @@ public class ItemBehavior : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            playerStats.itemsCollected.Add(id, true); 
+            playerStats.itemsCollected.Add(id); 
             Destroy(this.gameObject);
         }
     }
+
+    public void CheckCollectStatus(PlayerStats playerStats) // called by data persistence manager on scene load
+    {
+        if (playerStats.itemsCollected.Contains(id))
+        {
+            Destroy(this.gameObject);
+        }
+
+    }
+
+    public void LoadData(GameData data)
+    {
+        // inteface method
+    }
+    public void SaveData(ref GameData data)
+    { 
+        // interface method
+    }
+
 }

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class PlayerController : MonoBehaviour, IDataPersistence
+public class PlayerController : MonoBehaviour
 {
     private Rigidbody2D rbody;
     private float axisH = 0.0f;
@@ -28,13 +28,6 @@ public class PlayerController : MonoBehaviour, IDataPersistence
     }
 
     private int jumpCount;
-
-    // Interface method, reads saved data
-    public void LoadData(GameData data) {
-    }
-    // Interface method, writes save data
-    public void SaveData(ref GameData data) { 
-    }
 
     private void Start() 
     {

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerStats : MonoBehaviour, IDataPersistence
@@ -11,7 +12,7 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
     //
     [Header("Collected & Unlocked")]
     public SerializableDictionary<string, bool> abilitesUnlocked;
-    public SerializableDictionary<string, bool> itemsCollected;
+    public List<string> itemsCollected;
     //
     [SerializeField] private GameObject levelUpText;
     //
@@ -59,6 +60,10 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
         data.GOLD = this.GOLD;
         data.abilitesUnlocked = this.abilitesUnlocked;
         data.itemsCollected = this.itemsCollected;
+    }
+    public void CheckCollectStatus(PlayerStats playerStats)
+    {
+        // interface method, not used in this script
     }
     private void LevelUp() 
     {
