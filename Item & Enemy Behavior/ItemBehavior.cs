@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ItemBehavior : MonoBehaviour, IDataPersistence
+public class ItemBehavior : MonoBehaviour, ICollectible
 {
     [SerializeField] private string id = "healthup1"; // unique to this item
     private PlayerStats playerStats;
@@ -29,14 +29,4 @@ public class ItemBehavior : MonoBehaviour, IDataPersistence
         }
 
     }
-
-    public void LoadData(GameData data)
-    {
-        // inteface method
-    }
-    public void SaveData(ref GameData data)
-    { 
-        // interface method
-    }
-
 }

@@ -9,7 +9,7 @@ public class DataPersistenceManager : MonoBehaviour
     private FileDataHandler dataHandler;
     private GameData gameData;
     private List<IDataPersistence> dataPersistenceObjects;
-    private List<GameObject> collectibleItems;
+    private List<ICollectible> collectibleObjects;
     public static DataPersistenceManager instance { get; private set; }
     private PlayerStats playerStats;
 
@@ -24,11 +24,6 @@ public class DataPersistenceManager : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(this.gameObject);
         this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
-
-        GameObject player = GameObject.FindWithTag("Player");
-        if (player != null) {
-            playerStats = player.GetComponent<PlayerStats>();
-        }
     }
 
     private void OnEnable() {
@@ -42,11 +37,16 @@ public class DataPersistenceManager : MonoBehaviour
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
-        // find all data persistence objects on scene load
+        // find references on scene load
         this.dataPersistenceObjects = FindAllDataPersistenceObjects();
-        // check collected status (method destroys collected items)
-        foreach (IDataPersistence dataPersistenceObj in dataPersistenceObjects) {
-            dataPersistenceObj.CheckCollectStatus(playerStats);
+        this.collectibleObjects = FindAllCollectibleObjects();
+        
+        GameObject player = GameObject.FindWithTag("Player");
+        if (player != null) {
+            this.playerStats = player.GetComponent<PlayerStats>();
+        }
+        foreach (ICollectible collectibleObj in collectibleObjects) {
+            collectibleObj.CheckCollectStatus(playerStats);
         }
     }
 
@@ -119,5 +119,11 @@ public class DataPersistenceManager : MonoBehaviour
         IEnumerable<IDataPersistence> dataPersistenceObjects = 
         FindObjectsOfType<MonoBehaviour>().OfType<IDataPersistence>();
         return new List<IDataPersistence>(dataPersistenceObjects);
+    }
+
+    private List<ICollectible> FindAllCollectibleObjects() {
+        IEnumerable<ICollectible> collectibleObjects = 
+        FindObjectsOfType<MonoBehaviour>().OfType<ICollectible>();
+        return new List<ICollectible>(collectibleObjects);
     }
 }
