@@ -40,6 +40,7 @@ public class PlayerStateManager : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(this.gameObject);
     }
+    
     private void Start()
     {
         // state machine initial state
