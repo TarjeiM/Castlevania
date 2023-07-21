@@ -11,7 +11,7 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
     //
     [Header("Collected & Unlocked")]
     public SerializableDictionary<string, bool> abilitesUnlocked;
-    public SerializableDictionary<string, int> itemsCollected;
+    public SerializableDictionary<string, bool> itemsCollected;
     //
     [SerializeField] private GameObject levelUpText;
     //
