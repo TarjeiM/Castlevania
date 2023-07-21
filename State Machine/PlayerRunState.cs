@@ -29,11 +29,11 @@ public class PlayerRunState : PlayerBaseState
         if (player.isAttacking == false) {
             // flip gameobject
             if (dirX > 0.0f) {
-                Vector3 rotator = new Vector3(player.transform.rotation.x, 0f, player.transform.rotation.z);
+                Vector3 rotator = new Vector3(0f, 0f, 0f);
                 player.transform.rotation = Quaternion.Euler(rotator);
             }
             else if (dirX < 0.0f) {
-                Vector3 rotator = new Vector3(player.transform.rotation.x, 180f, player.transform.rotation.z);
+                Vector3 rotator = new Vector3(0f, 180f, 0f);
                 player.transform.rotation = Quaternion.Euler(rotator); 
             }
         }
