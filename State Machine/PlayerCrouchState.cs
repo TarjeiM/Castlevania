@@ -42,13 +42,15 @@ public class PlayerCrouchState : PlayerBaseState
     public override void OnCollisionEnter2D(PlayerStateManager player, Collision2D collision) {
 
     }
-
+    public override void OnTriggerEnter2D(PlayerStateManager player, Collider2D other)
+    {
+       
+    }
     private void CrouchingAttack(PlayerStateManager player)
     {
         player.playerAnimator.Play("Hero_Crouch_Attack", -1, 0f);
         isCrouchAttacking = true;
     }
-
     private void StandingHitBox(PlayerStateManager player) // enable the full height hitbox, call this on crouch exit
     {
         player.playerBox.enabled = true;

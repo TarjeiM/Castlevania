@@ -40,6 +40,10 @@ public class PlayerJumpState : PlayerBaseState
     public override void OnCollisionEnter2D(PlayerStateManager player, Collision2D collision) {
 
     }
+    public override void OnTriggerEnter2D(PlayerStateManager player, Collider2D other)
+    {
+        
+    }
     private void Attack(PlayerStateManager player) 
     {
         player.playerAnimator.Play("Hero_Air_Attack", -1, 0f);
