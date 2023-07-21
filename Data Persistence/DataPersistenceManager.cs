@@ -37,11 +37,9 @@ public class DataPersistenceManager : MonoBehaviour
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
-        // find references on scene load
-        // this.dataPersistenceObjects = FindAllDataPersistenceObjects();
         playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
         collectibleObjects = FindAllCollectibleObjects();
-        // find player stats and check collect status on collected items
+        // check collect status on collected items 
         foreach (ICollectible collectibleObj in collectibleObjects) {
             collectibleObj.CheckCollectStatus();
         }
@@ -83,10 +81,6 @@ public class DataPersistenceManager : MonoBehaviour
         this.gameData = new GameData(); 
         dataHandler.Save(gameData); 
         playerStats.LoadData(gameData);
-        /*
-        foreach (IDataPersistence dataPersistenceObj in dataPersistenceObjects) {
-            dataPersistenceObj.LoadData(gameData); // load the new data
-        }*/
         Debug.Log("New Game");
     }
 
@@ -98,10 +92,7 @@ public class DataPersistenceManager : MonoBehaviour
             Debug.LogError("No save data found.");
             return;
         }
-        // push the loaded data to scripts that need it
-        foreach (IDataPersistence dataPersistenceObj in dataPersistenceObjects) {
-            dataPersistenceObj.LoadData(gameData);
-        }
+        playerStats.LoadData(gameData);
         Debug.Log("Loaded Game");
     }
 
@@ -110,12 +101,6 @@ public class DataPersistenceManager : MonoBehaviour
         // save that data to a file using the data handler
         dataHandler.Save(gameData);
         Debug.Log("Saved Game");
-    }
-    
-    private List<IDataPersistence> FindAllDataPersistenceObjects() {
-        IEnumerable<IDataPersistence> dataPersistenceObjects = 
-        FindObjectsOfType<MonoBehaviour>().OfType<IDataPersistence>();
-        return new List<IDataPersistence>(dataPersistenceObjects);
     }
 
     private List<ICollectible> FindAllCollectibleObjects() {
