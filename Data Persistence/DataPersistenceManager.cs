@@ -11,7 +11,6 @@ public class DataPersistenceManager : MonoBehaviour
     private List<IDataPersistence> dataPersistenceObjects;
     private List<ICollectible> collectibleObjects;
     public static DataPersistenceManager instance { get; private set; }
-    private PlayerStats playerStats;
 
     private void Awake()
     {
@@ -40,13 +39,13 @@ public class DataPersistenceManager : MonoBehaviour
         // find references on scene load
         this.dataPersistenceObjects = FindAllDataPersistenceObjects();
         this.collectibleObjects = FindAllCollectibleObjects();
-        
+        // find player stats and check collect status on collected items
         GameObject player = GameObject.FindWithTag("Player");
         if (player != null) {
-            this.playerStats = player.GetComponent<PlayerStats>();
-        }
-        foreach (ICollectible collectibleObj in collectibleObjects) {
-            collectibleObj.CheckCollectStatus(playerStats);
+            PlayerStats playerStats = player.GetComponent<PlayerStats>();
+            foreach (ICollectible collectibleObj in collectibleObjects) {
+                collectibleObj.CheckCollectStatus(playerStats);
+            }
         }
     }
 

@@ -15,6 +15,19 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
     public List<string> itemsCollected;
     //
     [SerializeField] private GameObject levelUpText;
+
+    public static PlayerStats instance { get; private set; }
+    private void Awake()
+    {
+        if (instance != null)
+        { 
+            Debug.Log("Deleted excess playerstats from scene.");
+            Destroy(this.gameObject);
+            return;
+        }
+        instance = this;
+        DontDestroyOnLoad(this.gameObject);
+    }
     //
     public int[] levelReq = new int[] 
     { 0, 100, 250, 450, 700, 1000, 1350, 1750, 2200, 2700, // 1-10
