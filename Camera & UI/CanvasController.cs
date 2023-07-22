@@ -3,6 +3,7 @@ using TMPro;
 
 public class CanvasController : MonoBehaviour
 {
+    [SerializeField] private bool isTesting = false;
     public static CanvasController instance { get; private set; }
     private void Awake()
     {
@@ -37,6 +38,7 @@ public class CanvasController : MonoBehaviour
             playerStats = player.GetComponent<PlayerStats>();
         }
         playerHUD.SetActive(true);
+        if (isTesting) { testDisplay.SetActive(true); }
     }
     private void Update()
     {
@@ -73,6 +75,7 @@ public class CanvasController : MonoBehaviour
     {
         PauseGame();
         playerHUD.SetActive(false);
+        testDisplay.SetActive(false);
         playerStatScreen.SetActive(true);
         UpdateStatScreen();
 
@@ -82,6 +85,7 @@ public class CanvasController : MonoBehaviour
         UnPauseGame();
         playerStatScreen.SetActive(false);
         playerHUD.SetActive(true);
+        if (isTesting) { testDisplay.SetActive(true); }
     }
     private void UpdateStatScreen()
     {

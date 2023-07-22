@@ -18,6 +18,7 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
     }
 
     [Header("Player Stats")]
+    private int currentLevel;
     public int maxHP = 100;
     public int currentHP = 100;
     public int maxMP = 100; 
@@ -72,18 +73,23 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
         data.GOLD = this.GOLD;
         data.abilitesUnlocked = this.abilitesUnlocked;
         data.itemsCollected = this.itemsCollected;
-        Debug.Log("Save Step 2");
     }
     private void LevelUp() 
     {
-        // pause? wait for input?
+    
+        PauseGame();
         levelUpText.SetActive(true);
-        ScaleStatsToLevel();
+        StartCoroutine(RealTimeInvoke(1f));
+        
     }
     public void GainExperience(int experience)
     {
-        EXP += experience;
-        // check for level up?
+        currentLevel = GetCurrentLevel(EXP, levelReq); // check current level
+        EXP += experience; // add experience
+        if (currentLevel < GetCurrentLevel(EXP, levelReq)) // check if player reached next level
+        {
+            LevelUp();
+        }
         ScaleStatsToLevel();
     }
     public void ScaleStatsToLevel()
@@ -139,4 +145,19 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
         }   
         return result;
     }
+    private void PauseGame()
+    {
+        Time.timeScale = 0;
+    }
+    private void UnPauseGame()
+    {
+        Time.timeScale = 1;
+        Debug.Log("Unpause");
+    }
+    private IEnumerator<WaitForSecondsRealtime> RealTimeInvoke(float waitTime)
+    {
+        yield return new WaitForSecondsRealtime(waitTime);
+        levelUpText.SetActive(false);
+        UnPauseGame();
+    }    
 }
