@@ -76,11 +76,9 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
     }
     private void LevelUp() 
     {
-    
         PauseGame();
         levelUpText.SetActive(true);
-        StartCoroutine(RealTimeInvoke(1f));
-        
+        StartCoroutine(RealTimeInvokeUnPause(1.0f));
     }
     public void GainExperience(int experience)
     {
@@ -154,7 +152,7 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
         Time.timeScale = 1;
         Debug.Log("Unpause");
     }
-    private IEnumerator<WaitForSecondsRealtime> RealTimeInvoke(float waitTime)
+    private IEnumerator<WaitForSecondsRealtime> RealTimeInvokeUnPause(float waitTime)
     {
         yield return new WaitForSecondsRealtime(waitTime);
         levelUpText.SetActive(false);
