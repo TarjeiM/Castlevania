@@ -54,12 +54,12 @@ public class PlayerStateManager : MonoBehaviour
         currentState.EnterState(this); 
     }
 
-    private void Update() // take input and check for exit conditions
+    private void Update()
     {
         currentState.UpdateState(this); 
     }
 
-    private void FixedUpdate() // run physics
+    private void FixedUpdate()
     {
         currentState.FixedUpdateState(this);
     }
