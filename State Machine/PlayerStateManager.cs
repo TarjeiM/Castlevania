@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerStateManager : MonoBehaviour
+public class PlayerStateManager : Subject
 {
     // state instance references
     public PlayerBaseState currentState;
@@ -127,5 +127,20 @@ public class PlayerStateManager : MonoBehaviour
     }
     private void ResetAirAttack() {
         isAttacking = false;
+    }
+
+    // OBSERVER PATTERN
+    private new void NotifyObservers()
+    {
+        base.NotifyObservers();
+    }
+
+    private void AddObserver()
+    {
+
+    }
+    private void RemoveObserver()
+    {
+        
     }
 }
