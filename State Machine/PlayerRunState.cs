@@ -16,7 +16,7 @@ public class PlayerRunState : PlayerBaseState
             player.SwitchState(player.jumpState);
         }
         // check for state exit condition
-        if (player.playerRigidbody.velocity.y < -.1f) {
+        if (player.playerRigidbody.velocity.y < -.1f && !player.IsGrounded()) {
             player.SwitchState(player.fallState);
         }
         if (dirX == 0) {
