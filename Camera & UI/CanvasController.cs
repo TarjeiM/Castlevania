@@ -113,10 +113,12 @@ public class CanvasController : MonoBehaviour
     private void PauseGame()
     {
         Time.timeScale = 0;
+        AudioListener.pause = true;
     }
     private void UnPauseGame()
     {
         Time.timeScale = 1;
+        AudioListener.pause = false;
     }
     private float GetPercentage(float part, float whole)
     {
