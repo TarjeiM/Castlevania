@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class CanvasController : MonoBehaviour
@@ -25,6 +26,8 @@ public class CanvasController : MonoBehaviour
     [Header("Player HUD")]
     [SerializeField] private GameObject playerHUD; 
     [SerializeField] private TextMeshProUGUI textHealthHUD, textManaHUD;
+    [SerializeField] private Slider healthSlider;
+    [SerializeField] private Slider manaSlider;
     //
     [Header("Player Stat Screen")]
     [SerializeField] private GameObject playerStatScreen;
@@ -39,6 +42,8 @@ public class CanvasController : MonoBehaviour
         }
         playerHUD.SetActive(true);
         if (isTesting) { testDisplay.SetActive(true); }
+        healthSlider.maxValue = 100;
+        manaSlider.maxValue = 100;
     }
     private void Update()
     {
@@ -56,6 +61,8 @@ public class CanvasController : MonoBehaviour
             + playerStats.maxHP.ToString();
             textManaHUD.text = "MP " + playerStats.currentMP.ToString() + "/"
             + playerStats.maxMP.ToString();
+            healthSlider.value = GetPercentage(playerStats.currentHP, playerStats.maxHP);
+            manaSlider.value = GetPercentage(playerStats.currentMP, playerStats.maxMP);
         }
 
         if (playerStatScreen.activeInHierarchy) // toggle stat screen and player hud
@@ -110,5 +117,12 @@ public class CanvasController : MonoBehaviour
     private void UnPauseGame()
     {
         Time.timeScale = 1;
+    }
+    private float GetPercentage(float part, float whole)
+    {
+        float answer = part / whole;
+        answer *= 100;
+        return answer;
+        
     }
 }

@@ -21,8 +21,10 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
     private int currentLevel;
     public int maxHP = 100;
     public int currentHP = 100;
+    public int percentageHP;
     public int maxMP = 100; 
     public int currentMP = 100;
+    public int percentageMP;
     public int STR, INT, DEF, LCK, EXP, GOLD; 
     //
     [Header("Collected & Unlocked")]
@@ -112,6 +114,8 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
         {
             Debug.Log(GetCollectedHealthUp());
         }
+        percentageHP = (currentHP / maxHP) * 100;
+        percentageMP = (currentMP / maxMP) * 100;
     }
     private int GetCollectedHealthUp()
     {   
@@ -157,5 +161,5 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
         yield return new WaitForSecondsRealtime(waitTime);
         levelUpText.SetActive(false);
         UnPauseGame();
-    }    
+    } 
 }
