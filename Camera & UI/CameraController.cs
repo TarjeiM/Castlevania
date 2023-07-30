@@ -1,12 +1,11 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Cinemachine;
 
 public class CameraController : MonoBehaviour
 {
     private CinemachineVirtualCamera vCam;
     private GameObject player;
-    private void Awake()
+    private void OnEnable()
     {
         vCam = GetComponent<CinemachineVirtualCamera>();
         player = GameObject.FindWithTag("Player");
