@@ -24,7 +24,7 @@ public class PlayerStateManager : Subject
 
     // PLAYER STATS
     public float playerRunSpeed = 7f;
-    public float playerJumpForce = 13f;
+    public float playerJumpForce = 16f;
     public bool isAttacking;
 
     public static PlayerStateManager instance { get; private set; }
