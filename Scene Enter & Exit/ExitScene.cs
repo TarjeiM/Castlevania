@@ -3,9 +3,8 @@ using UnityEngine.SceneManagement;
 
 public class ExitScene: MonoBehaviour
 {
-    public string sceneToLoad;
-    public string exitName;
-
+    [SerializeField] private string sceneToLoad;
+    [SerializeField] private string exitName;
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag == "Player")
