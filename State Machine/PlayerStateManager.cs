@@ -23,7 +23,7 @@ public class PlayerStateManager : Subject
     [SerializeField] private LayerMask groundMask;
 
     // PLAYER STATS
-    public float playerRunSpeed = 7f;
+    public float playerRunSpeed = 10f;
     public float playerJumpForce = 16f;
     public bool isAttacking;
 
