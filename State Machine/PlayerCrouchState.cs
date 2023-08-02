@@ -4,7 +4,6 @@ public class PlayerCrouchState : PlayerBaseState
 {
     private float dirY = 0f;
     private float dirX = 0f;
-    public bool isCrouchAttacking = false;
     public override void EnterState(PlayerStateManager player) {
         Debug.Log("Hello from crouch state");
         player.playerAnimator.Play("Hero_Crouch");
@@ -16,8 +15,7 @@ public class PlayerCrouchState : PlayerBaseState
         dirY = Input.GetAxisRaw("Vertical");
         dirX = Input.GetAxisRaw("Horizontal");
 
-        if (isCrouchAttacking == false) { // 
-            // space button triggers switch to jump state
+        if (player.isAttacking == false) { 
             if (Input.GetButtonDown("Jump")) {
                 StandingHitBox(player);
                 player.SwitchState(player.jumpState);
@@ -49,7 +47,7 @@ public class PlayerCrouchState : PlayerBaseState
     private void CrouchingAttack(PlayerStateManager player)
     {
         player.playerAnimator.Play("Hero_Crouch_Attack", -1, 0f);
-        isCrouchAttacking = true;
+        player.isAttacking = true;
     }
     private void StandingHitBox(PlayerStateManager player) // enable the full height hitbox, call this on crouch exit
     {

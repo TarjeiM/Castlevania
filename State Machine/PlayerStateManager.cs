@@ -80,7 +80,7 @@ public class PlayerStateManager : Subject
         state.EnterState(this);
     }
 
-    public bool IsGrounded() // groundcheck with boxcast, returns bool
+    public bool IsGrounded() 
     {
         return Physics2D.BoxCast(new Vector2(playerBox.bounds.center.x, 
         (playerBox.bounds.center.y - (playerBox.size.y / 2))), 
@@ -107,7 +107,8 @@ public class PlayerStateManager : Subject
         playerCrouchAttackBox.enabled = false;
     }
     private void ResetCrouchAttack() {
-        crouchState.isCrouchAttacking = false;
+        isAttacking = false;
+        playerAnimator.Play("Hero_Crouch");
     }
 
     // SPECIAL ATTACK - methods called in animation events
