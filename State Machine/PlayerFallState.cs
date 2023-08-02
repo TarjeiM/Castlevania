@@ -6,7 +6,7 @@ public class PlayerFallState : PlayerBaseState
     public override void EnterState(PlayerStateManager player) {
         Debug.Log("Hello from fall state");
         if (player.isAttacking == false) {
-            player.playerAnimator.Play("Hero_Jump"); 
+            player.playerAnimator.Play("Hero_Fall"); 
         }
     }
     public override void UpdateState(PlayerStateManager player) {
@@ -18,6 +18,7 @@ public class PlayerFallState : PlayerBaseState
         }
         // checking for ground and no vertical velocity to switch to idle or running
         if (player.IsGrounded()) {
+            player.DisableAirAttackBox();
             if (dirX == 0f && player.playerRigidbody.velocity.x == 0f) {
                 player.SwitchState(player.idleState);
             }

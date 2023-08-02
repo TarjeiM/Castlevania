@@ -18,13 +18,11 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
     }
 
     [Header("Player Stats")]
-    private int currentLevel;
-    public int maxHP = 100;
-    public int currentHP = 100;
-    public int percentageHP;
-    public int maxMP = 100; 
-    public int currentMP = 100;
-    public int percentageMP;
+    private int currentLevel; // script internal 
+    public int maxHP, maxMP;
+    public int currentHP, currentMP;
+    public int percentageHP, percentageMP;
+    public int maxPotion, currentPotion;
     public int STR, INT, DEF, LCK, EXP, GOLD; 
     //
     [Header("Collected & Unlocked")]
@@ -63,6 +61,8 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
     }
     public void LoadData(GameData data) // called on new game and load game
     {
+        this.maxPotion = data.maxPotion;
+        this.currentPotion = this.maxPotion;
         this.EXP = data.EXP;
         this.GOLD = data.GOLD;      
         this.abilitesUnlocked = data.abilitesUnlocked;
@@ -71,6 +71,7 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
     }
     public void SaveData(ref GameData data) 
     { 
+        data.maxPotion = this.maxPotion;
         data.EXP = this.EXP;
         data.GOLD = this.GOLD;
         data.abilitesUnlocked = this.abilitesUnlocked;
@@ -162,4 +163,16 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
         levelUpText.SetActive(false);
         UnPauseGame();
     } 
+
+    public void RestoreHealth(int health) 
+    {
+        for (int i = 0; i < health; i++) {
+            if (currentHP < maxHP) {
+                currentHP++;
+            }
+            else {
+                return;
+            }
+        }
+    }
 }

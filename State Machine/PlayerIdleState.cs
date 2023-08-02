@@ -21,11 +21,9 @@ public class PlayerIdleState : PlayerBaseState
             if (Input.GetButtonDown("Jump")) {
                 player.SwitchState(player.jumpState);
             }
-            // vertical input can trigger switch to crouch state
             if (dirY < 0f) {
                 player.SwitchState(player.crouchState);
             }
-            // horizontal input triggers switch to run state
             if (dirX != 0) {
                 player.SwitchState(player.runState);
             }
@@ -34,6 +32,9 @@ public class PlayerIdleState : PlayerBaseState
             }
             if (Input.GetButtonDown("Special")) { // special attack, joystick button 5 (RB)
                 SpecialAttack(player);
+            }
+            if (Input.GetButtonDown("Drink")) {
+                ConsumePotion(player);
             }
         }
     }
@@ -57,5 +58,12 @@ public class PlayerIdleState : PlayerBaseState
     {
         player.playerAnimator.Play("Hero_Special", -1, 0f);
         player.isAttacking = true; 
+    }
+
+    public void ConsumePotion(PlayerStateManager player) {
+        if (PlayerStats.instance.currentPotion > 0) {
+            player.playerAnimator.Play("Hero_Drink");
+            PlayerStats.instance.RestoreHealth(50);
+        }
     }
 }

@@ -24,9 +24,10 @@ public class PlayerStateManager : Subject
 
     // PLAYER STATS
     public float playerRunSpeed = 10f;
-    public float playerJumpForce = 16f;
+    public float playerJumpForce = 18f;
     public bool isAttacking;
 
+    // Singleton Pattern Static Instance 
     public static PlayerStateManager instance { get; private set; }
 
     private void Awake()
@@ -123,11 +124,15 @@ public class PlayerStateManager : Subject
     private void EnableAirAttackBox() {
         playerAirAttackBox.enabled = true;
     }
-    private void DisableAirAttackBox() {
+    public void DisableAirAttackBox() {
         playerAirAttackBox.enabled = false;
     }
     private void ResetAirAttack() {
         isAttacking = false;
+    }
+
+    private void IdleAnimation() {
+        playerAnimator.Play("Hero_Idle");
     }
 
     // OBSERVER PATTERN
