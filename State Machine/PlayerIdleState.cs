@@ -64,6 +64,7 @@ public class PlayerIdleState : PlayerBaseState
         if (PlayerStats.instance.currentPotion > 0) {
             player.playerAnimator.Play("Hero_Drink");
             PlayerStats.instance.RestoreHealth(50);
+            PlayerStats.instance.currentPotion--;
         }
     }
 }
