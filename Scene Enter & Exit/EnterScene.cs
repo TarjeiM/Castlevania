@@ -3,9 +3,10 @@ using UnityEngine;
 public class EnterScene : MonoBehaviour
 {
     [SerializeField] private string lastExitName;
-    [SerializeField] private GameObject player;
+    private GameObject player;
     private void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
         if (PlayerPrefs.GetString("LastExitName") == lastExitName)
         {
             player.transform.position = transform.position;
