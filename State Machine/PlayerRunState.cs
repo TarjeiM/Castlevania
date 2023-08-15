@@ -35,9 +35,11 @@ public class PlayerRunState : PlayerBaseState
             }
         }
     }
-    public override void OnCollisionEnter2D(PlayerStateManager player, Collision2D collision) {
-
+    public override void OnCollisionEnter2D(PlayerStateManager player, Collision2D collision) 
+    {
+      
     }
+
     public override void OnTriggerEnter2D(PlayerStateManager player, Collider2D other)
     {
         
