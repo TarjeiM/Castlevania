@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ItemBehavior : MonoBehaviour, ICollectible
 {
-    [SerializeField] private string id = "healthup1"; // unique to this item
+    [SerializeField] private string id = ""; // unique to this item
     private PlayerStats playerStats;
 
     void Awake()
@@ -26,7 +26,5 @@ public class ItemBehavior : MonoBehaviour, ICollectible
         {
             Destroy(this.gameObject);
         }
-
-    }
-    
+    }  
 }

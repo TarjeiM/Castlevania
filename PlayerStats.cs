@@ -26,7 +26,6 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
     public int STR, INT, DEF, LCK, EXP, GOLD; 
     //
     [Header("Collected & Unlocked")]
-    public SerializableDictionary<string, bool> abilitesUnlocked;
     public List<string> itemsCollected;
     //
     [SerializeField] private GameObject levelUpText;
@@ -65,7 +64,6 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
         this.currentPotion = this.maxPotion;
         this.EXP = data.EXP;
         this.GOLD = data.GOLD;      
-        this.abilitesUnlocked = data.abilitesUnlocked;
         this.itemsCollected = data.itemsCollected;
         ScaleStatsToLevel();
     }
@@ -74,7 +72,6 @@ public class PlayerStats : MonoBehaviour, IDataPersistence
         data.maxPotion = this.maxPotion;
         data.EXP = this.EXP;
         data.GOLD = this.GOLD;
-        data.abilitesUnlocked = this.abilitesUnlocked;
         data.itemsCollected = this.itemsCollected;
     }
     private void LevelUp() 
