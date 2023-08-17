@@ -48,6 +48,7 @@ public class PlayerCrouchState : PlayerBaseState
     {
         player.playerAnimator.Play("Hero_Crouch_Attack", -1, 0f);
         player.isAttacking = true;
+        player.attackSound.Play();
     }
     private void StandingHitBox(PlayerStateManager player) // enable the full height hitbox, call this on crouch exit
     {

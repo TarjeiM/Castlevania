@@ -53,11 +53,13 @@ public class PlayerIdleState : PlayerBaseState
     {
         player.playerAnimator.Play("Hero_Attack", -1, 0f);
         player.isAttacking = true;
+        player.attackSound.Play();
     }
     private void SpecialAttack(PlayerStateManager player)
     {
         player.playerAnimator.Play("Hero_Special", -1, 0f);
         player.isAttacking = true; 
+        player.specialSound.Play();
     }
 
     public void ConsumePotion(PlayerStateManager player) {

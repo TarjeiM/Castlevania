@@ -48,5 +48,6 @@ public class PlayerJumpState : PlayerBaseState
     {
         player.playerAnimator.Play("Hero_Air_Attack", -1, 0f);
         player.isAttacking = true;
+        player.attackSound.Play();
     }
 }

@@ -1,4 +1,3 @@
-using UnityEditor;
 using UnityEngine;
 
 public class PlayerStateManager : Subject
@@ -20,6 +19,8 @@ public class PlayerStateManager : Subject
     public CircleCollider2D playerSpecialAttackBox;
     public CircleCollider2D playerAirAttackBox;
     public Animator playerAnimator;
+    public AudioSource attackSound;
+    public AudioSource specialSound;
 
     [SerializeField] private LayerMask groundMask;
 
@@ -58,7 +59,8 @@ public class PlayerStateManager : Subject
 
     private void Update()
     {
-        currentState.UpdateState(this); 
+        currentState.UpdateState(this);
+        if (Input.GetKeyDown(KeyCode.Escape)) { Application.Quit(); } 
     }
 
     private void FixedUpdate()
