@@ -86,9 +86,20 @@ public class PlayerStateManager : Subject
 
     public bool IsGrounded() 
     {
-        return Physics2D.BoxCast(new Vector2(playerBox.bounds.center.x, 
-        (playerBox.bounds.center.y - (playerBox.size.y / 2))), 
-        new Vector2(playerBox.size.x, .01f), 0f, Vector2.down, .1f, groundMask);
+        Vector2 capsuleCenter = (Vector2)transform.position + Vector2.down * .1f * 0.5f;
+
+        RaycastHit2D hit = Physics2D.CapsuleCast(
+            capsuleCenter,
+            new Vector2(.2f * 2f, .1f),
+            CapsuleDirection2D.Vertical,
+            0f,
+            Vector2.down,
+            .1f * 0.5f,
+            groundMask
+        );
+
+        // If the capsule cast hits something, the character is grounded
+        return hit.collider != null;
     }
 
     // REGULAR ATTACK - methods called in animation events
