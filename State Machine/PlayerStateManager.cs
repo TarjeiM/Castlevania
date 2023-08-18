@@ -12,8 +12,8 @@ public class PlayerStateManager : Subject
 
     // PLAYER COMPONENTS 
     public Rigidbody2D playerRigidbody; 
-    public BoxCollider2D playerBox;
-    public BoxCollider2D playerCrouchBox;
+    public CapsuleCollider2D playerBox;
+    public CapsuleCollider2D playerCrouchBox;
     public PolygonCollider2D playerAttackBox;
     public PolygonCollider2D playerCrouchAttackBox;
     public CircleCollider2D playerSpecialAttackBox;
