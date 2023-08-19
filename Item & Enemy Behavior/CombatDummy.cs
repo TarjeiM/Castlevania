@@ -13,7 +13,9 @@ public class CombatDummy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.name == "Attack")
+        if (other.gameObject.name == "Attack" || 
+        other.gameObject.name == "AirAttack" ||
+        other.gameObject.name == "CrouchAttack")
         {
             health -= 4;
             if (health <= 0)

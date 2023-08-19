@@ -38,6 +38,14 @@ public class DataPersistenceManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
         playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
+        string newGame = PlayerPrefs.GetString("NewGame");
+        if (newGame == "true") {
+            NewGame();
+        }
+        else if (newGame == "false") {
+            LoadGame();
+        }
+        PlayerPrefs.DeleteAll();
         collectibleObjects = FindAllCollectibleObjects();
         // check collect status on collected items 
         foreach (ICollectible collectibleObj in collectibleObjects) {
